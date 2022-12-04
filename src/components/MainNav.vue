@@ -4,9 +4,10 @@
       <div
         class="mx-auto flex h-full flex-nowrap border-b border-solid border-brand-gray-1 px-8"
       >
-        <a class="flex h-full items-center text-xl" :href="url">{{
+        <a :href="url" class="flex h-full items-center text-xl">{{
           company
         }}</a>
+
         <nav class="ml-12 h-full">
           <ul class="flex h-full list-none">
             <li
@@ -14,14 +15,16 @@
               :key="menuItem"
               class="ml-9 h-full first:ml-0"
             >
-              <a href="#" class="flex h-full items-center py-2.5">{{
+              <a href="" class="flex h-full items-center py-2.5">{{
                 menuItem
               }}</a>
             </li>
           </ul>
         </nav>
+
         <div class="ml-auto flex h-full items-center">
-          <action-button />
+          <profile-image v-if="isLoggedIn" />
+          <action-button v-else @click="loginUser" />
         </div>
       </div>
     </div>
@@ -30,10 +33,14 @@
 
 <script>
 import ActionButton from "@/components/ActionButton.vue";
+import ProfileImage from "@/components/ProfileImage.vue";
 
 export default {
   name: "MainNav",
-  components: { ActionButton },
+  components: {
+    ActionButton,
+    ProfileImage,
+  },
   data() {
     return {
       company: "Bobo Careers",
@@ -45,9 +52,13 @@ export default {
         "Students",
         "Jobs",
       ],
+      isLoggedIn: false,
     };
+  },
+  methods: {
+    loginUser() {
+      this.isLoggedIn = true;
+    },
   },
 };
 </script>
-
-<style lang="scss" scoped></style>
