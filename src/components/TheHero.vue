@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import TheHeadline from "@/components/theHeadline.vue";
+import TheHeadline from "@/components/TheHeadline.vue";
 export default {
   name: "TheHero",
   components: { TheHeadline },
