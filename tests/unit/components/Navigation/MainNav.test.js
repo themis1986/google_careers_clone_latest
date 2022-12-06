@@ -5,11 +5,17 @@ import userEvent from "@testing-library/user-event";
 
 describe("MainNav", () => {
   const renderMainNav = () => {
+    const $route = {
+      name: "Home",
+    };
     render(MainNav, {
       global: {
         stubs: {
           "font-awesome-icon": true,
           RouterLink: RouterLinkStub,
+        },
+        mocks: {
+          $route,
         },
       },
     });
@@ -29,8 +35,8 @@ describe("MainNav", () => {
     );
     // console.log(navigationMenuTexts);
     expect(navigationMenuTexts).toEqual([
-      "Teams ",
-      "Location",
+      "Teams",
+      "Locations",
       "Life at Bobo Corp",
       "Students",
       "Jobs",
