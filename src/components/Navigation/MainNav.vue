@@ -27,22 +27,22 @@
         </nav>
 
         <div class="ml-auto flex h-full items-center">
-          <profile-image v-if="userStore.isLoggedIn" />
+          <profile-image v-if="isLoggedIn" />
           <action-button
             v-else
             text="Sign in"
             type="primary"
-            @click="userStore.loginUser"
+            @click="loginUser"
           />
         </div>
       </div>
-      <the-subnav v-if="userStore.isLoggedIn" />
+      <the-subnav v-if="isLoggedIn" />
     </div>
   </header>
 </template>
 
 <script>
-import { mapStores } from "pinia";
+import { mapStores, mapActions, mapState } from "pinia";
 import { useUserStore } from "@/stores/user";
 import ActionButton from "@/components/Shared/ActionButton.vue";
 import ProfileImage from "@/components/Navigation/ProfileImage.vue";
@@ -68,10 +68,14 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useUserStore), // ==> { userStore: {.....} } we have access via the this keyword
+    //...mapStores(useUserStore), // ==> { userStore: {.....} } we have access via the this keyword  ex. this.userStore.isLoggedIn
+    ...mapState(useUserStore, ["isLoggedIn"]), // this.isLoggedIn
     headerHeightClass() {
-      return !this.userStore.isLoggedIn ? "h-16" : "h-32";
+      return !this.isLoggedIn ? "h-16" : "h-32";
     },
+  },
+  methods: {
+    ...mapActions(useUserStore, ["loginUser"]), // this.loginUser
   },
 };
 </script>
