@@ -11,6 +11,11 @@ describe("state", () => {
 
     expect(store.isLoggedIn).toBe(false);
   });
+
+  it("stores organizations that the user would like to filter jobs by", () => {
+    const store = useUserStore();
+    expect(store.selectedOrganizations).toEqual([]);
+  });
 });
 
 describe("actions", () => {
@@ -24,6 +29,14 @@ describe("actions", () => {
       store.loginUser();
 
       expect(store.isLoggedIn).toBe(true);
+    });
+  });
+
+  describe("ADD_SELECTED_ORGANIZATIONS", () => {
+    it("updates organizations the user has chosen to filter jobs by ", () => {
+      const store = useUserStore();
+      store.ADD_SELECTED_ORGANIZATIONS(["org1", "org2"]);
+      expect(store.selectedOrganizations).toEqual(["org1", "org2"]);
     });
   });
 });

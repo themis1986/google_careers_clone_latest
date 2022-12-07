@@ -36,7 +36,7 @@ describe("TheSubnav", () => {
     it("does not display job count", () => {
       const routeName = "Home";
       renderTheSubnav(routeName);
-      
+
       const jobCount = screen.queryByText("1653");
 
       expect(jobCount).not.toBeInTheDocument();
