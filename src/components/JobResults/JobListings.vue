@@ -33,19 +33,15 @@ import {
   useJobsStore,
   FETCH_JOBS,
   FILTERED_JOBS_BY_ORGANIZATIONS,
+  FILTERED_JOBS_BY_JOB_TYPES,
 } from "@/stores/jobs";
 import { mapActions, mapState } from "pinia";
 
 export default {
   name: "JobListings",
   components: { JobListing },
-  data() {
-    return {
-      // jobs: [],
-    };
-  },
   computed: {
-    ...mapState(useJobsStore, [FILTERED_JOBS_BY_ORGANIZATIONS]),
+    ...mapState(useJobsStore, [FILTERED_JOBS_BY_JOB_TYPES]),
     currentPage() {
       return Number.parseInt(this.$route.query.page || "1");
     },
@@ -56,19 +52,14 @@ export default {
     },
     nextPage() {
       const nextPage = this.currentPage + 1;
-      const maxPage = Math.ceil(
-        this.FILTERED_JOBS_BY_ORGANIZATIONS.length / 10
-      );
+      const maxPage = Math.ceil(this.FILTERED_JOBS_BY_JOB_TYPES.length / 10);
       return nextPage <= maxPage ? nextPage : undefined;
     },
     displayedJobs() {
       const pageNumber = this.currentPage;
       const firstJobIndex = (pageNumber - 1) * 10;
       const lastJobIndex = pageNumber * 10;
-      return this.FILTERED_JOBS_BY_ORGANIZATIONS.slice(
-        firstJobIndex,
-        lastJobIndex
-      );
+      return this.FILTERED_JOBS_BY_JOB_TYPES.slice(firstJobIndex, lastJobIndex);
     },
   },
   async mounted() {
