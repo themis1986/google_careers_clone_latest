@@ -91,4 +91,58 @@ describe("getters", () => {
       });
     });
   });
+
+  describe("UNIQUE_JOB_TYPES", () => {
+    it("finds unique job types from list of jobs", () => {
+      const store = useJobsStore();
+      store.jobs = [
+        { jobType: "full-time" },
+        { jobType: "temporary" },
+        { jobType: "full-time" },
+      ];
+      const result = store.UNIQUE_JOB_TYPES;
+      expect(result).toEqual(new Set(["full-time", "temporary"]));
+    });
+  });
+
+  describe("FILTERED_JOBS_BY_JOB_TYPES", () => {
+    it("identifies jobs that are associated with the given job types", () => {
+      const jobsStore = useJobsStore();
+      jobsStore.jobs = [
+        { jobType: "full-time" },
+        { jobType: "temporary" },
+        { jobType: "part-time" },
+      ];
+      const userStore = useUserStore();
+      userStore.selectedJobTypes = ["full-time", "part-time"];
+
+      const result = jobsStore.FILTERED_JOBS_BY_JOB_TYPES;
+
+      expect(result).toEqual([
+        { jobType: "full-time" },
+        { jobType: "part-time" },
+      ]);
+    });
+
+    describe("when the user has not selected any job types", () => {
+      it("returns all jobs", () => {
+        const jobsStore = useJobsStore();
+        jobsStore.jobs = [
+          { jobTYpe: "full-time" },
+          { jobTYpe: "temporary" },
+          { jobTYpe: "part-time" },
+        ];
+
+        const userStore = useUserStore();
+        userStore.selectedJobTypes = [];
+        const result = jobsStore.FILTERED_JOBS_BY_JOB_TYPES;
+
+        expect(result).toEqual([
+          { jobTYpe: "full-time" },
+          { jobTYpe: "temporary" },
+          { jobTYpe: "part-time" },
+        ]);
+      });
+    });
+  });
 });
