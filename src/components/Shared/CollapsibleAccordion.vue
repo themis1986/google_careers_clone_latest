@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { ref, computed } from "vue";
+
 export default {
   name: "CollabsibleAccordion",
   props: {
@@ -23,20 +25,17 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      isOpen: false,
+  setup() {
+    const isOpen = ref(false);
+
+    const carrotIcon = computed(() => {
+      return isOpen.value ? ["fas", "angle-up"] : ["fas", "angle-down"];
+    });
+
+    const open = () => {
+      isOpen.value = !isOpen.value;
     };
-  },
-  computed: {
-    carrotIcon() {
-      return this.isOpen ? ["fas", "angle-up"] : ["fas", "angle-down"];
-    },
-  },
-  methods: {
-    open() {
-      this.isOpen = !this.isOpen;
-    },
+    return { isOpen, carrotIcon, open };
   },
 };
 </script>
