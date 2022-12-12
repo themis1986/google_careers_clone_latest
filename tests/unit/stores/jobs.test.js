@@ -144,5 +144,53 @@ describe("getters", () => {
         ]);
       });
     });
+
+    describe("INCLUDE_JOB_BY_ORGANIZATION", () => {
+      describe("when the user has not selected any organizations", () => {
+        it("includes job", () => {
+          const userStore = useUserStore();
+          userStore.selectedOrganizations = [];
+          const jobsStore = useJobsStore();
+          const job = { organization: "google" };
+          const result = jobsStore.INCLUDE_JOB_BY_ORGANIZATION(job);
+
+          expect(result).toBe(true);
+        });
+      });
+
+      it("identifies if job is associated with given organizations", () => {
+        const userStore = useUserStore();
+        userStore.selectedOrganizations = ["google", "microsoft"];
+        const jobsStore = useJobsStore();
+        const job = { organization: "google" };
+        const result = jobsStore.INCLUDE_JOB_BY_ORGANIZATION(job);
+
+        expect(result).toBe(true);
+      });
+    });
+
+    describe("INCLUDE_JOB_BY_JOB_TYPE", () => {
+      describe("when the user has not selected any job types", () => {
+        it("includes job", () => {
+          const userStore = useUserStore();
+          userStore.selectedJbTypes = [];
+          const jobsStore = useJobsStore();
+          const job = { jobType: "full-time" };
+          const result = jobsStore.INCLUDE_JOB_BY_JOB_TYPE(job);
+
+          expect(result).toBe(true);
+        });
+      });
+
+      it("identifies if job is associated with given job types", () => {
+        const userStore = useUserStore();
+        userStore.selectedJobTypes = ["full-time", "part-time"];
+        const jobsStore = useJobsStore();
+        const job = { jobType: "part-time" };
+        const result = jobsStore.INCLUDE_JOB_BY_JOB_TYPE(job);
+
+        expect(result).toBe(true);
+      });
+    });
   });
 });
