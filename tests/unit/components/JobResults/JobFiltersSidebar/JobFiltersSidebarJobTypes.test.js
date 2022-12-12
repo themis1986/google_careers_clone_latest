@@ -7,7 +7,6 @@ import { useJobsStore } from "@/stores/jobs";
 import { useUserStore } from "@/stores/user";
 
 import { useRouter } from "vue-router";
-import { router } from "json-server";
 import { vi } from "vitest";
 vi.mock("vue-router");
 

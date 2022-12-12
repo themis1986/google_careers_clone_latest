@@ -5,27 +5,25 @@ import { createTestingPinia } from "@pinia/testing";
 import JobFiltersSidebarOrganizations from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue";
 import { useJobsStore } from "@/stores/jobs";
 import { useUserStore } from "@/stores/user";
+import { useRouter } from "vue-router";
+vi.mock("vue-router");
 
 describe("JobFiltersSidebarOrganizations", () => {
   const renderJobFiltersSidebarOrganizations = () => {
     const pinia = createTestingPinia();
     const userStore = useUserStore();
     const jobsStore = useJobsStore();
-    const $router = {
-      push: vi.fn(),
-    };
 
     render(JobFiltersSidebarOrganizations, {
       global: {
         plugins: [pinia],
-        mocks: { $router },
         stubs: {
           FontAwesomeIcon: true,
         },
       },
     });
 
-    return { userStore, jobsStore, $router };
+    return { userStore, jobsStore };
   };
   it("renders unique list of organizations from jobs", async () => {
     const { jobsStore } = renderJobFiltersSidebarOrganizations();
@@ -40,8 +38,10 @@ describe("JobFiltersSidebarOrganizations", () => {
     expect(organizations).toEqual(["Google", "Amazon"]);
   });
 
-  describe("whe user click checbox", () => {
-    it("communicates that user jas selected checkbox for organization", async () => {
+  describe("when user click checbox", () => {
+    it("communicates that user has selected checkbox for organization", async () => {
+      const push = vi.fn();
+      useRouter.mockReturnValue({ push });
       const { userStore, jobsStore } = renderJobFiltersSidebarOrganizations();
       jobsStore.UNIQUE_ORGANIZATIONS = new Set(["Google", "Amazon"]);
 
@@ -57,7 +57,9 @@ describe("JobFiltersSidebarOrganizations", () => {
     });
 
     it("navigates user to job results page to see fresh batch of job results", async () => {
-      const { jobsStore, $router } = renderJobFiltersSidebarOrganizations();
+      const push = vi.fn();
+      useRouter.mockReturnValue({ push });
+      const { jobsStore } = renderJobFiltersSidebarOrganizations();
       jobsStore.UNIQUE_ORGANIZATIONS = new Set(["google"]);
 
       const button = screen.getByRole("button", { name: /organizations/i });
@@ -68,7 +70,7 @@ describe("JobFiltersSidebarOrganizations", () => {
       });
       await userEvent.click(fullTimeCheckbox);
 
-      expect($router.push).toHaveBeenCalledWith({ name: "JobResults" });
+      expect(push).toHaveBeenCalledWith({ name: "JobResults" });
     });
   });
 });
