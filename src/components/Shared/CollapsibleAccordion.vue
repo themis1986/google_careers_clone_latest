@@ -14,29 +14,24 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, computed } from "vue";
 
-export default {
-  name: "CollabsibleAccordion",
-  props: {
-    header: {
-      type: String,
-      required: true,
-    },
+defineProps({
+  header: {
+    type: String,
+    required: true,
   },
-  setup() {
-    const isOpen = ref(false);
+});
 
-    const carrotIcon = computed(() => {
-      return isOpen.value ? ["fas", "angle-up"] : ["fas", "angle-down"];
-    });
+const isOpen = ref(false);
 
-    const open = () => {
-      isOpen.value = !isOpen.value;
-    };
-    return { isOpen, carrotIcon, open };
-  },
+const carrotIcon = computed(() => {
+  return isOpen.value ? ["fas", "angle-up"] : ["fas", "angle-down"];
+});
+
+const open = () => {
+  isOpen.value = !isOpen.value;
 };
 </script>
 
