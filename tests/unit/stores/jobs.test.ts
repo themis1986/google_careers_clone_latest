@@ -3,7 +3,7 @@ import { createPinia, setActivePinia } from "pinia";
 import axios from "axios";
 import { useUserStore } from "@/stores/user";
 import type { Mock } from "vitest";
-import type { Job } from "@/api/types";
+import { createJob } from "../../utils/createJob";
 
 vi.mock("axios");
 const axiosGetMock = axios.get as Mock;
@@ -37,20 +37,6 @@ describe("actions", () => {
 });
 
 describe("getters", () => {
-  const createJob = (job: Partial<Job> = {}): Job => ({
-    id: 1,
-    title: "Angular Developer",
-    organization: "Vue and Me",
-    degree: "Master's",
-    jobType: "Intern",
-    locations: ["Lisbon"],
-    minimumQualifications: ["Mesh granular deliverables"],
-    preferredQualifications: ["Mesh wireless metrics"],
-    description: ["Away someone forget effect wait land."],
-    dateAdded: "2021-07-04",
-    ...job,
-  });
-
   beforeEach(() => {
     setActivePinia(createPinia());
   });

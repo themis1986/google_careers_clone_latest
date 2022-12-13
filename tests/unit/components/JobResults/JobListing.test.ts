@@ -1,16 +1,11 @@
 import { render, screen } from "@testing-library/vue";
 import { RouterLinkStub } from "@vue/test-utils";
 import JobListing from "@/components/JobResults/JobListing.vue";
+import { createJob } from "../../../utils/createJob";
+import type { Job } from "@/api/types";
 
 describe("JobListing", () => {
-  const createJobProps = (jobProps = {}) => ({
-    title: "Vue Developer",
-    organization: "AirBnB",
-    locations: ["New York"],
-    minimumQualifications: ["code"],
-    ...jobProps,
-  });
-  const renderJobListing = (jobProps) => {
+  const renderJobListing = (job: Job) => {
     render(JobListing, {
       global: {
         stubs: {
@@ -19,28 +14,28 @@ describe("JobListing", () => {
       },
       props: {
         job: {
-          ...jobProps,
+          ...job,
         },
       },
     });
   };
 
   it("renders job title", () => {
-    const jobProps = createJobProps({ title: "Vue Programmer" });
+    const jobProps = createJob({ title: "Vue Programmer" });
     renderJobListing(jobProps);
 
     expect(screen.getByText("Vue Programmer")).toBeInTheDocument();
   });
 
   it("renders job organization", () => {
-    const jobProps = createJobProps({ organization: "Samsung" });
+    const jobProps = createJob({ organization: "Samsung" });
     renderJobListing(jobProps);
 
     expect(screen.getByText("Samsung")).toBeInTheDocument();
   });
 
   it("renders job locations", () => {
-    const jobProps = createJobProps({ locations: ["Orlando", "JacksonVille"] });
+    const jobProps = createJob({ locations: ["Orlando", "JacksonVille"] });
     renderJobListing(jobProps);
 
     expect(screen.getByText("Orlando")).toBeInTheDocument();
@@ -48,7 +43,7 @@ describe("JobListing", () => {
   });
 
   it("renders job qualifications", () => {
-    const jobProps = createJobProps({
+    const jobProps = createJob({
       minimumQualifications: ["code", "develop"],
     });
     renderJobListing(jobProps);
