@@ -41,41 +41,24 @@
   </header>
 </template>
 
-<script>
-import { mapStores, mapActions, mapState } from "pinia";
+<script lang="ts" setup>
+import { ref, computed } from "vue";
 import { useUserStore } from "@/stores/user";
 import ActionButton from "@/components/Shared/ActionButton.vue";
 import ProfileImage from "@/components/Navigation/ProfileImage.vue";
 import TheSubnav from "@/components/Navigation/TheSubnav.vue";
 
-export default {
-  name: "MainNav",
-  components: {
-    ActionButton,
-    ProfileImage,
-    TheSubnav,
-  },
-  data() {
-    return {
-      url: "https://careers.google.com",
-      menuItems: [
-        { text: "Teams", url: "/teams" },
-        { text: "Locations", url: "/" },
-        { text: "Life at Bobo Corp", url: "/" },
-        { text: "Students", url: "/" },
-        { text: "Jobs", url: "/jobs/results" },
-      ],
-    };
-  },
-  computed: {
-    //...mapStores(useUserStore), // ==> { userStore: {.....} } we have access via the this keyword  ex. this.userStore.isLoggedIn
-    ...mapState(useUserStore, ["isLoggedIn"]), // this.isLoggedIn
-    headerHeightClass() {
-      return !this.isLoggedIn ? "h-16" : "h-32";
-    },
-  },
-  methods: {
-    ...mapActions(useUserStore, ["loginUser"]), // this.loginUser
-  },
-};
+const menuItems = ref([
+  { text: "Teams", url: "/teams" },
+  { text: "Locations", url: "/" },
+  { text: "Life at Bobo Corp", url: "/" },
+  { text: "Students", url: "/" },
+  { text: "Jobs", url: "/jobs/results" },
+]);
+
+const userStore = useUserStore();
+const isLoggedIn = computed(() => userStore.isLoggedIn);
+const headerHeightClass = computed(() => (!isLoggedIn.value ? "h-16" : "h-32"));
+
+const loginUser = userStore.loginUser;
 </script>

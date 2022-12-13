@@ -5,12 +5,14 @@ import userEvent from "@testing-library/user-event";
 import { createTestingPinia } from "@pinia/testing";
 import { useUserStore } from "@/stores/user";
 import { useRoute } from "vue-router";
+import type { Mock } from "itest";
 
 vi.mock("vue-router");
+const mockUseRoute = useRoute as Mock;
 
 describe("MainNav", () => {
   const renderMainNav = () => {
-    useRoute.mockReturnValue({ name: "Home" });
+    mockUseRoute.mockReturnValue({ name: "Home" });
     const pinia = createTestingPinia();
     render(MainNav, {
       global: {
