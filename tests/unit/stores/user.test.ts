@@ -50,11 +50,19 @@ describe("actions", () => {
     });
   });
 
-  describe("ADD-SELECTED_JOB_TYPES", () => {
+  describe("ADD_SELECTED_JOB_TYPES", () => {
     it("updates job types the user has chosen to fiter jobs by", () => {
       const store = useUserStore();
       store.ADD_SELECTED_JOB_TYPES(["full-time", "part-time"]);
       expect(store.selectedJobTypes).toEqual(["full-time", "part-time"]);
+    });
+  });
+
+  describe("ADD_SELECTED_DEGREES", () => {
+    it("updates degrees the user has chosen to fiter jobs by", () => {
+      const store = useUserStore();
+      store.ADD_SELECTED_DEGREES(["Master's", "Barchelor's"]);
+      expect(store.selectedDegrees).toEqual(["Master's", "Barchelor's"]);
     });
   });
 });
