@@ -14,22 +14,13 @@
         </div>
       </div>
       <collapsible-accordion header="Degrees">
-        <job-filters-sidebar-checkbox-group
-          :unique-values="UNIQUE_DEGREES"
-          :action="userStore.ADD_SELECTED_DEGREES"
-        />
+        <job-filters-sidebar-degrees />
       </collapsible-accordion>
       <collapsible-accordion header="Job Types">
-        <job-filters-sidebar-checkbox-group
-          :unique-values="UNIQUE_JOB_TYPES"
-          :action="userStore.ADD_SELECTED_JOB_TYPES"
-        />
+        <job-filters-sidebar-job-types />
       </collapsible-accordion>
       <collapsible-accordion header="Organizations">
-        <job-filters-sidebar-checkbox-group
-          :unique-values="UNIQUE_ORGANIZATIONS"
-          :action="userStore.ADD_SELECTED_ORGANIZATIONS"
-        />
+        <job-filters-sidebar-organizations />
       </collapsible-accordion>
     </section>
   </div>
@@ -37,19 +28,13 @@
 
 <script lang="ts" setup>
 import ActionButton from "@/components/Shared/ActionButton.vue";
-import JobFiltersSidebarCheckboxGroup from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarCheckboxGroup.vue";
 import CollapsibleAccordion from "@/components/Shared/CollapsibleAccordion.vue";
-import { useJobsStore } from "@/stores/jobs";
+
 import { useUserStore } from "@/stores/user";
-import { useDegreesStore } from "@/stores/degrees";
-import { computed } from "vue";
 
-const jobsStore = useJobsStore();
-const degreesStore = useDegreesStore();
-
-const UNIQUE_ORGANIZATIONS = computed(() => jobsStore.UNIQUE_ORGANIZATIONS);
-const UNIQUE_JOB_TYPES = computed(() => jobsStore.UNIQUE_JOB_TYPES);
-const UNIQUE_DEGREES = computed(() => degreesStore.UNIQUE_DEGREES);
+import JobFiltersSidebarDegrees from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarDegrees.vue";
+import JobFiltersSidebarJobTypes from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue";
+import JobFiltersSidebarOrganizations from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue";
 
 const userStore = useUserStore();
 </script>
