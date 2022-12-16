@@ -4,6 +4,7 @@
   >
     <section class="pb-5">
       <job-filters-sidebar-promt />
+      <job-filters-sidebar-skills />
       <collapsible-accordion header="Degrees">
         <job-filters-sidebar-degrees />
       </collapsible-accordion>
@@ -23,6 +24,7 @@ import JobFiltersSidebarDegrees from "@/components/JobResults/JobFiltersSidebar/
 import JobFiltersSidebarJobTypes from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue";
 import JobFiltersSidebarOrganizations from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue";
 import JobFiltersSidebarPromt from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarPrompt.vue";
+import JobFiltersSidebarSkills from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarSkills.vue";
 </script>
 
 <style lang="scss" scoped></style>
