@@ -1,4 +1,4 @@
-import { useJobsStore } from "@/stores/jobs";
+import { INCLUDE_JOB_BY_DEGREE, useJobsStore } from "@/stores/jobs";
 import { createPinia, setActivePinia } from "pinia";
 import axios from "axios";
 import { useUserStore } from "@/stores/user";
@@ -134,6 +134,41 @@ describe("getters", () => {
       const result = jobsStore.INCLUDE_JOB_BY_DEGREE(job);
 
       expect(result).toBe(true);
+    });
+  });
+  describe("INCLUDE_JOB_BY_SKILL", () => {
+    it("identifies if job is matches users skill", () => {
+      const userStore = useUserStore();
+      userStore.skillsSearchTerm = "Vue";
+      const jobsStore = useJobsStore();
+      const job = createJob({ title: "Vue Developer" });
+      const result = jobsStore.INCLUDE_JOB_BY_SKILL(job);
+
+      expect(result).toBe(true);
+    });
+
+    it("handles inconsistent character casing", () => {
+      const userStore = useUserStore();
+      userStore.skillsSearchTerm = "vuE";
+      const store = useJobsStore();
+      const job = createJob({ title: "Vue Developer" });
+
+      const result = store.INCLUDE_JOB_BY_SKILL(job);
+
+      expect(result).toBe(true);
+    });
+
+    describe("when the user has not entered any skill", () => {
+      it("includes job", () => {
+        const userStore = useUserStore();
+        userStore.skillsSearchTerm = "";
+        const store = useJobsStore();
+        const job = createJob({ title: "Vue Developer" });
+
+        const result = store.INCLUDE_JOB_BY_SKILL(job);
+
+        expect(result).toBe(true);
+      });
     });
   });
 });
