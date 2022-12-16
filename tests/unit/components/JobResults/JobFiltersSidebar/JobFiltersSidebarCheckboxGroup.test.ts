@@ -4,6 +4,7 @@ import { createTestingPinia } from "@pinia/testing";
 import JobFiltersSidebarCheckboxGroup from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarCheckboxGroup.vue";
 import { useRouter } from "vue-router";
 import type { Mock } from "vitest";
+import { useUserStore } from "@/stores/user";
 
 interface JobFiltersSidebarCheckboxGroups {
   uniqueValues: Set<string>;
@@ -24,7 +25,8 @@ describe("JobFiltersSidebarCheckboxGroup", () => {
   const renderJobFiltersCheckboxGroup = (
     props: JobFiltersSidebarCheckboxGroups
   ) => {
-    const pinia = createTestingPinia();
+    const pinia = createTestingPinia({ stubActions: false });
+    const userStore = useUserStore();
 
     render(JobFiltersSidebarCheckboxGroup, {
       props: {
@@ -32,11 +34,10 @@ describe("JobFiltersSidebarCheckboxGroup", () => {
       },
       global: {
         plugins: [pinia],
-        stubs: {
-          FontAwesomeIcon: true,
-        },
       },
     });
+
+    return { userStore };
   };
   it("renders unique list of values", () => {
     const props = createProps({
@@ -84,6 +85,33 @@ describe("JobFiltersSidebarCheckboxGroup", () => {
       await userEvent.click(fullTimeCheckbox);
 
       expect(push).toHaveBeenCalledWith({ name: "JobResults" });
+    });
+  });
+
+  describe("when user clears job filters", () => {
+    it("unchecks any checked checkboxes", async () => {
+      const props = createProps({
+        uniqueValues: new Set(["full-time"]),
+      });
+      const push = vi.fn();
+      useRouterMock.mockReturnValue({ push });
+      const { userStore } = renderJobFiltersCheckboxGroup(props);
+
+      const fullTimeCheckboxBeforeAction = screen.getByRole<HTMLInputElement>(
+        "checkbox",
+        {
+          name: /full-time/i,
+        }
+      );
+      await userEvent.click(fullTimeCheckboxBeforeAction);
+      expect(fullTimeCheckboxBeforeAction.checked).toBe(true);
+
+      userStore.CLEAR_USER_JOB_FILTER_SELECTIONS();
+      const fullTimeCheckboxAfterAction =
+        await screen.findByRole<HTMLInputElement>("checkbox", {
+          name: /full-time/i,
+        });
+      expect(fullTimeCheckboxAfterAction.checked).toBe(false);
     });
   });
 });
