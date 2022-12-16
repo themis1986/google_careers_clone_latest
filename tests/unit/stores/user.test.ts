@@ -93,6 +93,7 @@ describe("actions", () => {
       expect(store.selectedDegrees).toEqual([]);
       expect(store.selectedJobTypes).toEqual([]);
       expect(store.selectedOrganizations).toEqual([]);
+      expect(store.skillsSearchTerm).toBe("");
     });
   });
 });
