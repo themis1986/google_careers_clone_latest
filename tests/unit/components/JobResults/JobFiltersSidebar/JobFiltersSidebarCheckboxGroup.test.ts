@@ -14,14 +14,18 @@ interface JobFiltersSidebarCheckboxGroups {
 vi.mock("vue-router");
 const useRouterMock = useRouter as Mock;
 describe("JobFiltersSidebarCheckboxGroup", () => {
-  const createProps = (props: Partial<JobFiltersSidebarCheckboxGroups>) => ({
+  const createProps = (
+    props: Partial<JobFiltersSidebarCheckboxGroups>
+  ): JobFiltersSidebarCheckboxGroups => ({
     header: "Some header",
     uniqueValues: new Set(["valueA", "valueB"]),
     action: vi.fn(),
     ...props,
   });
 
-  const renderJobFiltersCheckboxGroup = (props) => {
+  const renderJobFiltersCheckboxGroup = (
+    props: JobFiltersSidebarCheckboxGroups
+  ) => {
     const pinia = createTestingPinia();
 
     render(JobFiltersSidebarCheckboxGroup, {
