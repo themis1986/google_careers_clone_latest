@@ -25,7 +25,7 @@ import CollapsibleAccordion from "@/components/Shared/CollapsibleAccordion.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
-const selectedValues = ref<string>([]);
+const selectedValues = ref<string[]>([]);
 
 const props = defineProps({
   header: {

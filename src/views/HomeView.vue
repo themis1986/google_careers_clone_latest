@@ -2,13 +2,8 @@
   <the-hero />
 </template>
 
-<script>
+<script lang="ts" setup>
 import TheHero from "@/components/JobSearch/TheHero.vue";
-
-export default {
-  name: "HomeView",
-  components: { TheHero },
-};
 </script>
 
 <style lang="scss" scoped></style>
