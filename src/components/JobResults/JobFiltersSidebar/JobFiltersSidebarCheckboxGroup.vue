@@ -24,6 +24,7 @@
 import CollapsibleAccordion from "@/components/Shared/CollapsibleAccordion.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useUserStore, CLEAR_USER_JOB_FILTER_SELECTIONS } from "@/stores/user";
 
 const selectedValues = ref<string[]>([]);
 
@@ -49,6 +50,15 @@ const selectValue = () => {
     name: "JobResults",
   });
 };
+
+const userStore = useUserStore();
+userStore.$onAction(({ after, name }) => {
+  after(() => {
+    if (name === CLEAR_USER_JOB_FILTER_SELECTIONS) {
+      selectedValues.value = [];
+    }
+  });
+});
 </script>
 
 <style lang="scss" scoped></style>

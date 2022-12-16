@@ -7,13 +7,6 @@ export const ADD_SELECTED_DEGREES = "ADD_SELECTED_DEGREES";
 export const CLEAR_USER_JOB_FILTER_SELECTIONS =
   "CLEAR_USER_JOB_FILTER_SELECTIONS";
 
-export interface UserState {
-  isLoggedIn: boolean;
-  selectedOrganizations: string[];
-  selectedJobTypes: string[];
-  selectedDegrees: string[];
-}
-
 export const useUserStore = defineStore("user", () => {
   const isLoggedIn = ref<Boolean>(false);
   const selectedOrganizations = ref<string[]>([]);
@@ -52,6 +45,13 @@ export const useUserStore = defineStore("user", () => {
     CLEAR_USER_JOB_FILTER_SELECTIONS,
   };
 });
+
+// export interface UserState {
+//   isLoggedIn: boolean;
+//   selectedOrganizations: string[];
+//   selectedJobTypes: string[];
+//   selectedDegrees: string[];
+// }
 
 // export const useUserStore = defineStore("user", {
 //   state: (): UserState => ({

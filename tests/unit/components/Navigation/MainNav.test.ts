@@ -5,7 +5,7 @@ import userEvent from "@testing-library/user-event";
 import { createTestingPinia } from "@pinia/testing";
 import { useUserStore } from "@/stores/user";
 import { useRoute } from "vue-router";
-import type { Mock } from "itest";
+import type { Mock } from "vitest";
 
 vi.mock("vue-router");
 const mockUseRoute = useRoute as Mock;
